@@ -1,9 +1,6 @@
 
 public class BinarySearchTree implements BST_Interface {
 	
-	public static void main (String[] args) {
-	}
-	
 	public BST_Node addRoot(String data) {
 		BST_Node root = new BST_Node();
 		if (data == null) {
@@ -43,44 +40,47 @@ public class BinarySearchTree implements BST_Interface {
 					currentNode = currentNode.getRightNode();
 				}
 			}
+			else {
+				return false;
+			}
 		}
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean remove(BST_Node node, String s) {
-			if (node.getData() == s) {
-				return true;			
-			}
-			else if (Integer.parseInt(s) > Integer.parseInt(node.getData())) {
-				if (node.getRightNode() != null) {
-					if (node.getRightNode().getData() == s) {
-						String side = "right";
-						removeNextStep(node, side);
-					}
-					else {
-						contains(node.getRightNode(), s);					
-					}
+		if (node.getData() == s) {
+			return true;			
+		}
+		else if (Integer.parseInt(s) > Integer.parseInt(node.getData())) {
+			if (node.getRightNode() != null) {
+				if (node.getRightNode().getData() == s) {
+					String side = "right";
+					removeNextStep(node, side);
 				}
 				else {
-					return false;
+					contains(node.getRightNode(), s);					
 				}
 			}
-			else if (Integer.parseInt(s) < Integer.parseInt(node.getData())) {
-				if (node.getLeftNode() != null) {
-					if (node.getLeftNode().getData() == s) {
-						String side = "left";
-						removeNextStep(node, side);
-					}
-					else {
-						contains(node.getLeftNode(), s);					
-					}
+			else {
+				return false;
+			}
+		}
+		else if (Integer.parseInt(s) < Integer.parseInt(node.getData())) {
+			if (node.getLeftNode() != null) {
+				if (node.getLeftNode().getData() == s) {
+					String side = "left";
+					removeNextStep(node, side);
 				}
 				else {
-					return false;
+					contains(node.getLeftNode(), s);					
 				}
 			}
-			return false;
+			else {
+				return false;
+			}
+		}
+		return false;
 	}
 	
 	public void removeNextStep(BST_Node node, String side) {
@@ -165,24 +165,34 @@ public class BinarySearchTree implements BST_Interface {
 
 	@Override
 	public boolean contains(BST_Node node, String s) {
-		if (node.getData() == s) {
-			return true;			
-		}
-		else if (Integer.parseInt(s) > Integer.parseInt(node.getData())) {
+		
+		if (Integer.parseInt(s) > Integer.parseInt(node.getData())) {
 			if (node.getRightNode() != null) {
-				contains(node.getRightNode(), s);
-			}
-			else {
-				return false;
+				if (node.getRightNode().getData() == s) {
+					return true;
+				}
+				else {
+					contains(node.getRightNode(), s);
+				}
 			}
 		}
 		else if (Integer.parseInt(s) < Integer.parseInt(node.getData())) {
 			if (node.getLeftNode() != null) {
-				contains(node.getLeftNode(), s);				
+				// why did adding this statement in work - and not just calling the
+				// contains function again recursively???
+				if (node.getLeftNode().getData() == s) {
+					return true;
+				}
+				else {
+					contains(node.getLeftNode(), s);	
+				}
 			}
-			else {
-				return false;
-			}
+		}
+		else if (node.getData() == s) {
+				return true;
+		}
+		else {
+			return false;
 		}
 		return false;
 	}

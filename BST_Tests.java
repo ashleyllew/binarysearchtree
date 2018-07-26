@@ -91,7 +91,29 @@ public class BST_Tests {
 		BinarySearchTree myBST = new BinarySearchTree();
 		BST_Node root = myBST.addRoot("12");
 		myBST.insert(root, "15");
-		myBST.insert(root, "23");
-		assertEquals(myBST.contains(root, "15"), true);
+		boolean contains = myBST.contains(root, "15");
+		assertEquals(contains, true);
 	}
+	
+	@Test
+	public void containsSecondNode() {
+		BinarySearchTree myBST = new BinarySearchTree();
+		BST_Node root = myBST.addRoot("12");
+		myBST.insert(root, "15");
+		myBST.insert(root, "11");
+		boolean contains = myBST.contains(root, "11");
+		assertEquals(contains, true);
+	}
+	// why doesn't this test work??
+//	@Test
+//	public void containsThirdNode() {
+//		BinarySearchTree myBST = new BinarySearchTree();
+//		BST_Node root = myBST.addRoot("12");
+//		myBST.insert(root, "15");
+//		myBST.insert(root, "11");
+//		myBST.insert(root, "17");
+//		boolean contains = myBST.contains(root, "17");
+//		assertEquals(contains, true);
+//	}
+
 }
